@@ -4,8 +4,10 @@
   "main": "index.js",
   "author": "cr33p",
   "license": "MIT",
-  "scripts": {
-    "build": "webpack index.js bundle.js --module-bind 'js=babel-loader'"
+    "scripts": {
+    "development": "NODE_ENV=development webpack --progress --colors --watch --watch-poll",
+    "production": "NODE_ENV=production webpack --progress --colors --watch --watch-poll",
+    "build": "webpack"
   },
   "dependencies": {
     "babel-core": "^6.17.0",

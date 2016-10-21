@@ -138,14 +138,14 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var matches = (0, _connector.getMatches)(true);
+	      var matches = (0, _connector.getMatches)();
 	      this.setState({
-	        players: (0, _connector.getPlayers)(true),
+	        players: (0, _connector.getPlayers)(),
 	        allMatches: matches,
 	        currMatches: matches.filter(function (m) {
 	          return m.matchday == 1;
 	        }),
-	        results: (0, _connector.getResults)(true),
+	        results: (0, _connector.getResults)(),
 	        currMatchday: 1
 	      });
 	    }
