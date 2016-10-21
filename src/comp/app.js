@@ -2,28 +2,40 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Table from './table.js';
 import MatchDay from './matchday.js';
-import { getPlayers, getMatches, getResults, getNewResults, updateMatch } from '../connector.js';
+import Connector from '../connector.js';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
+    this.connector = new Connector(false);
     this.updateStateMatch = this.updateStateMatch.bind(this);
     this.forwardClick = this.forwardClick.bind(this);
     this.backwardClick = this.backwardClick.bind(this);
+    this.setPlayers = this.setPlayers.bind(this);
+    this.setMatches = this.setMatches.bind(this);
+    this.setResults = this.setResults.bind(this);
     this.state = { players: [], allMatches: [], results: [], currMatches: [], currMatchday: 1 };
   }
 
 
-  updateStateMatch(match, homescore, awayscore) {
-    updateMatch(match.id, match.home, match.away, homescore, awayscore, this.state.currMatchday);
-
-    let matches = getMatches();
+  setPlayers(players) {
+    this.setState({ players: players });
+  }
+  setMatches(matches) {
     this.setState({
-      players: getPlayers(),
       allMatches: matches,
-      currMatches: matches.filter((m) => m.matchday == this.state.currMatchday),
-      results: getResults()
+      currMatches: matches.filter((m) => m.matchday == this.state.currMatchday)
+    });
+  }
+  setResults(results) {
+    this.setState({ results: results });
+  }
+
+  updateStateMatch(match, homescore, awayscore) {
+    this.connector.updateMatch(match.id, match.home, match.away, homescore, awayscore, this.state.currMatchday, () => {
+      this.connector.getMatches((response) => this.setMatches(response));
+      this.connector.getResults((response) => this.setResults(response));
     });
   }
 
@@ -44,15 +56,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let matches = getMatches();
-    this.setState({
-      players: getPlayers(),
-      allMatches: matches,
-      currMatches: matches.filter((m) => m.matchday == 1),
-      results: getResults(),
-      currMatchday: 1
-    });
-
+    this.connector.getMatches((response) => this.setMatches(response));
+    this.connector.getPlayers((response) => this.setPlayers(response));
+    this.connector.getResults((response) => this.setResults(response))
+    this.setState({ currMatchday: 1 });
   }
 
   render() {
