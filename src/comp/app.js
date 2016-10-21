@@ -44,12 +44,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let matches = getMatches();
+    let matches = getMatches(true);
     this.setState({
-      players: getPlayers(),
+      players: getPlayers(true),
       allMatches: matches,
       currMatches: matches.filter((m) => m.matchday == 1),
-      results: getResults(),
+      results: getResults(true),
       currMatchday: 1
     });
 

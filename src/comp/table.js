@@ -10,7 +10,7 @@ export default class Table extends React.Component {
         return (
             <div className="col-lg-6">
                 <h2>Tabelle</h2>
-                <table className="table table-striped">
+                <table className="table table-striped results">
                     <thead>
                         <tr>
                             <th>Position</th>
