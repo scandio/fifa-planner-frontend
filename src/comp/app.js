@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Table from './table.js';
 import MatchDay from './matchday.js';
-import Connector from '../connector.js';
+import Connector from '../connector/connector.js';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connector = new Connector(false);
+    this.connector = new Connector(true);
     this.updateStateMatch = this.updateStateMatch.bind(this);
     this.forwardClick = this.forwardClick.bind(this);
     this.backwardClick = this.backwardClick.bind(this);
