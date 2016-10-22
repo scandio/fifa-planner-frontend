@@ -60,6 +60,6 @@ export default class Connector {
   }
 
   addPlayer(name, done) {
-    this._doRequest('matches/'+name, 'GET', null, (response) => done());
+    this._doRequest('matches/'+name, 'POST', null, (response) => done());
   }
 }
