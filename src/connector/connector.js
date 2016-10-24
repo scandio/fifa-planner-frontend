@@ -4,7 +4,7 @@ import axios from 'axios';
 import {players, matches, results} from './dummy.data.js';
 
 
-let server = "localhost:8080/rest/v1/";
+let server = "192.168.11.96:8080/rest/v1/";
 
 export default class Connector {
 
@@ -60,6 +60,6 @@ export default class Connector {
   }
 
   addPlayer(name, done) {
-    this._doRequest('matches/'+name, 'POST', null, (response) => done());
+    this._doRequest('teams/'+name, 'POST', null, (response) => done());
   }
 }
