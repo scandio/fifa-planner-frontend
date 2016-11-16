@@ -4,7 +4,7 @@ import axios from 'axios';
 import {players, matches, results} from './dummy.data.js';
 
 
-let server = "192.168.11.96:8080/rest/v1/";
+const server = "192.168.11.96:8080/rest/v1/";
 
 export default class Connector {
 
@@ -53,7 +53,7 @@ export default class Connector {
   }
 
   updateMatch(id, home, away, homeGoals, awayGoals, matchday, done) {
-    let params = {
+    const params = {
       "id": id, "away": away, "home": home, "homeGoals": homeGoals, "awayGoals": awayGoals, "matchday": matchday
     };
     this._doRequest('matches', 'POST', params, (response) => done());

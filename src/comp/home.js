@@ -40,7 +40,7 @@ export default class Home extends React.Component {
   }
 
   forwardClick() {
-    let matchday = this.state.currMatchday + 1;
+    const matchday = this.state.currMatchday + 1;
     this.setState({
       currMatchday: matchday,
       currMatches: this.state.allMatches.filter((m) => m.matchday == matchday)
@@ -48,7 +48,7 @@ export default class Home extends React.Component {
   }
 
   backwardClick() {
-    let matchday = this.state.currMatchday - 1;
+    const matchday = this.state.currMatchday - 1;
     this.setState({
       currMatchday: matchday,
       currMatches: this.state.allMatches.filter((m) => m.matchday == matchday)
