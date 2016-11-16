@@ -20,5 +20,8 @@
     "react-dom": "^15.3.2",
     "react-router": "^2.8.1",
     "sync-request": "^3.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.3"
   }
 }
