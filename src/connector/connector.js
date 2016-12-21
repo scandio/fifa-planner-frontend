@@ -4,7 +4,7 @@ import axios from 'axios';
 import {players, matches, results} from './dummy.data.js';
 
 
-let server = "192.168.11.129:8080/rest/v1/";
+let server = "104.199.90.212/rest/v1/";
 
 export default class Connector {
 

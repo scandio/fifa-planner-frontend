@@ -18,7 +18,11 @@
     "babelify": "^7.3.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-redux": "^5.0.1",
     "sync-request": "^3.0.1",
+    "webpack": "^1.14.0"
+  },
+  "devDependencies": {
     "webpack-dev-server": "^1.16.2"
   }
 }

@@ -8,7 +8,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connector = new Connector(true);
+    this.connector = new Connector();
     this.updateStateMatch = this.updateStateMatch.bind(this);
     this.forwardClick = this.forwardClick.bind(this);
     this.backwardClick = this.backwardClick.bind(this);
