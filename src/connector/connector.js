@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 
 
-const server = "http://104.199.90.212:8080/rest/v1/";
+const server = "http://v22017014202143365.hotsrv.de:8080/rest/v1/";
 
 const playerReducer = (state = [], action) => {
   if (action.type == 'UPDATE_PLAYERS') {
