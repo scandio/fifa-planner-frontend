@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TableRow from './table.row.js';
 
-export default class Table extends React.Component {
+class Table extends React.Component {
 
     render() {
         var rows = this.props.results.map((result, index) =>
@@ -10,26 +11,37 @@ export default class Table extends React.Component {
         return (
             <div className="col-lg-6">
                 <h2>Tabelle</h2>
-                <table className="table table-striped results">
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Mannschaft</th>
-                            <th>Spiele</th>
-                            <th>S.</th>
-                            <th>U.</th>
-                            <th>N.</th>
-                            <th>Tore</th>
-                            <th>Dif.</th>
-                            <th>Punkte</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table className="table table-striped results">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Mannschaft</th>
+                                <th>Spiele</th>
+                                <th>S.</th>
+                                <th>U.</th>
+                                <th>N.</th>
+                                <th>Tore</th>
+                                <th>Dif.</th>
+                                <th>Punkte</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
 
 }
+
+const mapStateToProps = (state) => {
+  return { 
+      results: state.results,
+      players: state.players
+    }
+}
+
+export default connect(mapStateToProps, null)(Table);
