@@ -3,3 +3,5 @@ yarn.lock
 graph.html
 graph.js
 build/*
+node_modules/*
+build/*

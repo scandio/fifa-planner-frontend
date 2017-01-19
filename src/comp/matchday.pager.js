@@ -1,20 +1,23 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {incrementMatchday, decrementMatchday } from '../actions';
 
-export default class MatchdayPager extends React.Component {
+class MatchdayPager extends React.Component {
 
     render() {
         return (
-            <div className="row h2-height">
-                <div className="col-lg-6">
+            <div className="row">
+                <div className="col-xs-6">
                     <h2>Spieltag</h2>
                 </div>
-                <div className="col-lg-1 header-margin" onClick={this.props.backwardClick}>
+                <div className="col-xs-1 header-margin" onClick={this.props.decrementMatchday}>
                     <span className="glyphicon glyphicon-backward"></span>
                 </div>
-                <div className="col-lg-1 header-margin-input">
-                    <input type="text" className="form-control disabled" value={this.props.currMatchday} size="2" readOnly />
+                <div className="col-xs-2 header-margin-input">
+                    <input type="text" className="form-control disabled" value={this.props.matchday} size="2" readOnly />
                 </div>
-                <div className="col-lg-1 header-margin" onClick={this.props.forwardClick}>
+                <div className="col-xs-1 header-margin" onClick={this.props.incrementMatchday}>
                     <span className="glyphicon glyphicon-forward"></span>
                 </div>
             </div>
@@ -23,3 +26,19 @@ export default class MatchdayPager extends React.Component {
     }
 
 }
+
+const mapStateToProps = (state) => {
+  return { matchday: state.matchday }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    incrementMatchday: incrementMatchday,
+    decrementMatchday: decrementMatchday
+  };
+
+  const boundActionCreators = bindActionCreators(actions, dispatch);
+  return boundActionCreators;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MatchdayPager);

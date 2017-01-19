@@ -1,61 +1,101 @@
 import http from 'http';
 import request from 'sync-request';
 import axios from 'axios';
-import {players, matches, results} from './dummy.data.js';
+import { players, matches, results } from './dummy.data.js';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 
 
-let server = "192.168.11.129:8080/rest/v1/";
+const server = "http://v22017014202143365.hotsrv.de:8080/rest/v1/";
+
+const playerReducer = (state = [], action) => {
+  if (action.type == 'UPDATE_PLAYERS') {
+    return action.payload;
+  }
+  return state;
+}
+
+const matchReducer = (state = [], action) => {
+  if (action.type == 'UPDATE_MATCHES') {
+    return action.payload;
+  }
+  return state;
+}
+
+const resultReducer = (state = [], action) => {
+  if (action.type == 'UPDATE_RESULTS') {
+    return action.payload;
+  }
+  return state;
+}
+
+const matchdayReducer = (state = 1, action) => {
+  if (action.type == 'UPDATE_MATCHDAY') {
+    return action.payload;
+  }
+  return state;
+}
+
+const reducer = combineReducers({
+  players: playerReducer,
+  matches: matchReducer,
+  results: resultReducer,
+  matchday: matchdayReducer
+});
+
+const middleware = applyMiddleware(logger());
+const store = createStore(reducer, middleware);
+
+
+
 
 export default class Connector {
 
-  constructor(dummy){
+  constructor(dummy) {
     this.dummy = dummy;
   }
 
-  _doRequest(path, method, params, callback){
-
-    axios({
-      method: method,
-      url: 'http://'+server + path,
-      data: params
-    })
-    .then(function (response) {
-      callback(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
-  }
-
-  getPlayers(done) {
+  getPlayers() {
     if (this.dummy) {
       done(players);
       return;
     }
-    this._doRequest('teams', 'GET', null, (response) => done(response.data));
+
+    axios.get(server + 'teams')
+      .then(response => {
+        store.dispatch({ type: 'UPDATE_PLAYERS', payload: response.data })
+      });
   }
 
-  getMatches(done) {
+  getMatches() {
     if (this.dummy) {
       done(matches);
       return;
     }
-    this._doRequest('matches', 'GET', null, (response) => done(response.data));
+    axios.get(server + 'matches')
+      .then(response => {
+        store.dispatch({ type: 'UPDATE_MATCHES', payload: response.data })
+      });
   }
 
-  getResults(done) {
+  getResults() {
     if (this.dummy) {
       done(results);
       return;
     }
-    this._doRequest('table', 'GET', null, (response) => done(response.data));
+    axios.get(server + 'table')
+      .then(response => {
+        store.dispatch({ type: 'UPDATE_RESULTS', payload: response.data })
+      });
   }
 
-  updateMatch(id, home, away, homeGoals, awayGoals, matchday, done) {
-    let params = {
+  updateMatch(id, home, away, homeGoals, awayGoals, matchday) {
+    const params = {
       "id": id, "away": away, "home": home, "homeGoals": homeGoals, "awayGoals": awayGoals, "matchday": matchday
     };
-    this._doRequest('matches', 'POST', params, (response) => done());
+    axios.post(server + 'matches', params)
+      .then(response => {
+        this.getMatches();
+      })
   }
 }
